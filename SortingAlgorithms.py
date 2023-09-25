@@ -13,14 +13,26 @@ def selection_sort(array):
     return array
 
 
-def bubble_sort(array):
-    if array is None or len(array) == 0:
-        return array
-    for i in range(0, len(array)):
-        for j in range(i + 1, len(array)):
-            if array[i] > array[j]:
-                array[i], array[j] = array[j], array[i]
-    return array
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+
+
+def bubble_sort_recursive(arr, n=None):
+    if n is None:
+        n = len(arr)
+    # Base case: If the entire list is sorted or empty, return
+    if n <= 1:
+        return
+    # Perform one pass through the list and move the largest element to the end
+    for i in range(n - 1):
+        if arr[i] > arr[i + 1]:
+            arr[i], arr[i + 1] = arr[i + 1], arr[i]
+    # Recursively call bubble_sort on the shortened list
+    bubble_sort_recursive(arr, n - 1)
 
 
 def merge_sort(array):
