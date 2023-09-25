@@ -20,6 +20,10 @@ def bubble_sort(arr):
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
 
+# 1 2 3 4 5 6
+# 0 1 2 3 4 5
+# j j+1
+
 
 def bubble_sort_recursive(arr, n=None):
     if n is None:

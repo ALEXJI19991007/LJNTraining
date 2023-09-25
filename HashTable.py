@@ -87,9 +87,49 @@ def common_numbers_of_two_arrays(array_A, array_B):
     return result
 
 
+# 1 1 1 1 2 3 4 5 6 7 7
+# 1 2 3 1 2 3 1 2 3 1 2 3 7 7
+# 0. Sort the original string / array
+# 1. Determine the pair
+#    1.1 create a hash map to record all the occurrence count
+#    1.2 every number that occurs more than or equal to 2 times may be the pair
+# 2. For each number that could be a pair
+#    2.1 remove these two occurrence for that number from the original string / array
+#    2.2 use recursive backtracking to determine if the remaining string is in the form n * AAA + m * ABC
+# Time Complexity: O(2^n) exponential time due to the recursive backtracking
+# Space Complexity: O(2^n)
+
+
+# [1, 1, 2, 2, 3, 3, 1, 2, 3, 4, 4] --> n * AAA + m * ABC + 1 * BB
+# "11223312344" --> string可以直接当成array --> num_string[0]...
+# "1,1,2,2,3,3,1,2,3,4,4" --> 我们要用split()函数把这个string分解成an array of numbers
+# 11111222
+def is_valid_string(num_string: str):
+    num_string_arr = num_string.split(",")
+    occurrence = {}
+    for num in num_string_arr:
+        if num not in occurrence:
+            occurrence[num] = 0
+        occurrence[num] += 1
+    has_pair = False
+    for entry in occurrence.items():
+        if entry[1] % 3 == 0:
+            continue
+        elif entry[1] == 2 and not has_pair:
+            has_pair = True
+        elif entry[1] % 3 == 2 and not has_pair:
+            has_pair = True
+        else:
+            return False
+    return True
+
+
 tuple_array = [(5, 6), (1, 3), (2, 3), (3, 6), (15, 12), (5, 7), (4, 5), (4, 9), (9, 12), (30, 16)]
 print(slb_karat_tree(tuple_array))
 
 zhu_A = [1, 2, 3, 3, 3, 4, 5]
 zhu_B = [3, 2, 2, 4, 5, 6]
 print(common_numbers_of_two_arrays(zhu_A, zhu_B))
+
+num_string_test = "1,1,1,2,2,3,3,1,2,3,4,4"
+print(is_valid_string(num_string_test))
