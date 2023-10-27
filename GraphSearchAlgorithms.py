@@ -82,6 +82,47 @@ def is_in_maze(cell, num_rows, num_cols):
     return 0 <= cell[0] < num_rows and 0 <= cell[1] < num_cols
 
 
+def find_distance_between_two_nodes(array_of_tuples: list[tuple], start, end):
+    # Construct graph (adjacency list):
+    graph = construct_graph(array_of_tuples)
+    distance = 0
+    visited_nodes = set()
+    queue = [start]
+    visited_nodes.add(start)
+    while len(queue) != 0:
+        size = len(queue)
+        for i in range(size):
+            # Expand
+            cur_node = queue.pop(0)
+            neighbors = graph[cur_node]
+            # Expand
+
+            # Discover
+            for neighbor in neighbors:
+                if neighbor == end:
+                    return distance + 1
+                if neighbor not in visited_nodes:
+                    visited_nodes.add(neighbor)
+                    queue.append(neighbor)
+            # Discover
+        distance += 1
+    return -1
+
+
+def construct_graph(array_of_tuples: list[tuple]):
+    graph = {}
+    for t in array_of_tuples:
+        node1 = t[0]
+        node2 = t[1]
+        if node1 not in graph:
+            graph[node1] = []
+        graph[node1].append(node2)
+        if node2 not in graph:
+            graph[node2] = []
+        graph[node2].append(node1)
+    return graph
+
+
 def generate_graph():
     node_1 = Node(1, [])
     node_2 = Node(2, [])
@@ -110,3 +151,7 @@ node_1.neighbors = [node_2, node_3]
 node_2.neighbors = [node_1, node_3]
 node_3.neighbors = [node_1, node_2]
 print(count_nodes_in_cc(node_1))
+
+
+array_of_tuples = [('A', 'B'), ('A', 'C'), ('B', 'D'), ('D', 'E')]
+print(find_distance_between_two_nodes(array_of_tuples, 'C', 'E'))

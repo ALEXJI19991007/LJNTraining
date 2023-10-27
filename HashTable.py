@@ -121,8 +121,23 @@ def is_valid_string(num_string: str):
             has_pair = True
         else:
             return False
-    return True
+    return has_pair
 
+
+def intersection_of_two_arrays(A, B):
+    res = []
+    if len(A) == 0 or len(B) == 0:
+        return res
+    count_A = {}
+    for a in A:
+        if a not in count_A:
+            count_A[a] = 0
+        count_A[a] += 1
+    for b in B:
+        if b in count_A and count_A[b] > 0:
+            count_A[b] -= 1
+            res.append(b)
+    return res
 
 tuple_array = [(5, 6), (1, 3), (2, 3), (3, 6), (15, 12), (5, 7), (4, 5), (4, 9), (9, 12), (30, 16)]
 print(slb_karat_tree(tuple_array))
